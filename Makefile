@@ -21,8 +21,8 @@ RDM.app: SetResX Resources Info.plist monitor.icns
 	mv monitor.icns RDM.app/Contents/Resources
 
 
-SetResX: main.o SRApplicationDelegate.o ResMenuItem.o cmdline.o utils.o 
-	$(CC) $^ -o $@ $(ARCH_FLAGS) -framework Foundation -framework ApplicationServices -framework AppKit 
+SetResX: main.o SRApplicationDelegate.o ResMenuItem.o cmdline.o utils.o wakeupRegister.o
+	$(CC) $^ -o $@ $(ARCH_FLAGS) -framework Foundation -framework ApplicationServices -framework AppKit -framework IoKit 
 
 
 clean:

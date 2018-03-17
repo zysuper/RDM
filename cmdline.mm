@@ -9,8 +9,6 @@
 
 int cmdline_main(int argc, const char * argv[])
 {
-	//exit(0);
-	
 	NSAutoreleasePool* pool = [NSAutoreleasePool new];
  	{
 		int width = 0;

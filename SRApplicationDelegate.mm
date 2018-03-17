@@ -7,6 +7,7 @@
 
 #import "utils.h"
 #import "ResMenuItem.h"
+#import "wakeupRegister.h"
 
 
 
@@ -227,6 +228,7 @@
 	CGDirectDisplayID display = [item display];
 	int modeNum = [item modeNum];
 	
+	fprintf(stderr,"display id %d modeNum id %d",display,modeNum);
 	SetDisplayModeNum(display, modeNum);
 	/*
 	
@@ -236,6 +238,44 @@
         CGCompleteDisplayConfiguration(config, kCGConfigureForSession);
     }*/
 	[self refreshStatusMenu];
+}
+
+- (void) resetDisplay
+{
+	uint32_t nDisplays;
+	CGDirectDisplayID displays[0x10];
+	CGGetOnlineDisplayList(0x10, displays, &nDisplays);	
+
+	for(int i=0; i<nDisplays; i++)
+	{
+		CGDirectDisplayID display = displays[i];
+		int mainModeNum;
+		CGSGetCurrentDisplayMode(display, &mainModeNum);	
+
+		fprintf(stderr,"current display id <%d> modeNum id <%d>\n",display,mainModeNum);
+
+		if(mainModeNum == 4) {
+			SetDisplayModeNum(display,15);
+			sleep(2);
+			CGSGetCurrentDisplayMode(display, &mainModeNum);	
+			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
+			SetDisplayModeNum(display,4);
+			CGSGetCurrentDisplayMode(display, &mainModeNum);	
+			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
+
+			fprintf(stderr,"setting end...");
+		} 
+
+		if(mainModeNum == 3) {
+			SetDisplayModeNum(display,14);
+			sleep(2);
+			CGSGetCurrentDisplayMode(display, &mainModeNum);	
+			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
+			SetDisplayModeNum(display,3);
+			CGSGetCurrentDisplayMode(display, &mainModeNum);	
+			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
+		}
+	}
 }
 
 - (void) applicationDidFinishLaunching: (NSNotification*) notification
@@ -253,7 +293,9 @@
   }
 
 	[self refreshStatusMenu];
-	
+
+	//reset for wakeup normal.
+	registerWakeup(self);
 }
 
 @end
