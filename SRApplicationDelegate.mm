@@ -254,8 +254,8 @@
 
 		fprintf(stderr,"current display id <%d> modeNum id <%d>\n",display,mainModeNum);
 
-		if(mainModeNum == 4) {
-			SetDisplayModeNum(display,15);
+		if(mainModeNum == 4 && display == 2034356672) {
+			SetDisplayModeNum(display,11);
 			sleep(2);
 			CGSGetCurrentDisplayMode(display, &mainModeNum);	
 			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
@@ -266,8 +266,8 @@
 			fprintf(stderr,"setting end...");
 		} 
 
-		if(mainModeNum == 3) {
-			SetDisplayModeNum(display,14);
+		if(mainModeNum == 3 && display == 2034356672) {
+			SetDisplayModeNum(display,11);
 			sleep(2);
 			CGSGetCurrentDisplayMode(display, &mainModeNum);	
 			fprintf(stderr,"reset display id <%d> modeNum id <%d>\n",display,mainModeNum);
